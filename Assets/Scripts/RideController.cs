@@ -24,16 +24,23 @@ public class RideController : MonoBehaviour
 
     private void Update()
     {
-        if(Time.time >= nextTime)
-        {
-            // Change direction of force applied to skier
-            forceDirection = -forceDirection;
-            nextTime = Time.time + turnTimer;
-        }
-        rb.AddForce(forceDirection * slalomForce);
+        // Only start slaloming whenever sliding down
         if (rb.velocity.z != 0)
         {
-            slalomForce += (rb.velocity.z / prevForce) * forceScaler;
+
+            if (Time.time >= nextTime)
+            {
+                // Change direction of force applied to skier
+                forceDirection = -forceDirection;
+                nextTime = Time.time + turnTimer;
+            }
+            rb.AddForce(forceDirection * slalomForce);
+
+
+            if (rb.velocity.z > prevForce)
+                slalomForce += (rb.velocity.z / prevForce) * forceScaler;
+           // else
+           //     slalomForce -= (rb.velocity.z / prevForce) * forceScaler;
             prevForce = rb.velocity.z;
         }
     }
