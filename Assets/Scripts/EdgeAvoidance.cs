@@ -7,13 +7,14 @@ public class EdgeAvoidance : MonoBehaviour
     [HideInInspector]public Collider leftEdge;
     [HideInInspector]public Collider rightEdge;
     
-    public float willToNotCrashAndDie = 10f;
+    [SerializeField] float willToNotCrashAndDie = 10f;
+    [SerializeField] float distanceInfluenceScalar = 5f;
 
     private Rigidbody rb;
 
 
-    private float prevDistLeft = 5f;
-    private float prevDistRight = 5f;
+    public float prevDistLeft = 5f;
+    public float prevDistRight = 5f;
 
 
     float helpTimer = 0.0f;
@@ -44,7 +45,7 @@ public class EdgeAvoidance : MonoBehaviour
     (float speed, float new_distance) ApproachSpeed(Collider edge, float prevDist)
     {
         float new_dist = CalculateDistanceToEdge(edge);
-        float approach_speed = (prevDist - new_dist) * Time.deltaTime;
+        float approach_speed = (prevDist - new_dist) / Time.deltaTime;
         return (approach_speed, new_dist);
     }
 
@@ -59,13 +60,17 @@ public class EdgeAvoidance : MonoBehaviour
         if(left_approach_speed > 0)
         {
             // We're closing in on the left edge
-            rb.AddForce(CalculateAwayVector(leftEdge) * willToNotCrashAndDie);
+            /** (1/(CalculateDistanceToEdge(rightEdge) * distanceInfluenceScalar)) */
+            rb.AddForce(CalculateAwayVector(leftEdge) * willToNotCrashAndDie * left_approach_speed);
+            // Debug.Log("Force: " + (willToNotCrashAndDie * left_approach_speed / (prevDistLeft * prevDistLeft * distanceInfluenceScalar)));
         }
 
         if(right_approach_speed > 0)
         {
             // We're closing in on the right edge
-            rb.AddForce(CalculateAwayVector(rightEdge) * willToNotCrashAndDie);
+            /** (1/(CalculateDistanceToEdge(leftEdge) * distanceInfluenceScalar))*/
+            rb.AddForce(CalculateAwayVector(rightEdge) * willToNotCrashAndDie * right_approach_speed);
+            // Debug.Log("Force: " + (willToNotCrashAndDie * right_approach_speed / (prevDistRight * prevDistRight * distanceInfluenceScalar)));
         }
 
 
