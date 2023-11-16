@@ -15,9 +15,11 @@ GameObject:
   - component: {fileID: 8516591225940507011}
   - component: {fileID: 764507904}
   - component: {fileID: 764507903}
+  - component: {fileID: 8516591226268749691}
+  - component: {fileID: 8516591226268749699}
   m_Layer: 0
   m_Name: Skier
-  m_TagString: Untagged
+  m_TagString: Skier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +112,7 @@ Rigidbody:
   m_GameObject: {fileID: 8516591225940507008}
   serializedVersion: 2
   m_Mass: 20
-  m_Drag: 0.1
+  m_Drag: 0.01
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -223,7 +225,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8516591225940507008}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6ceca53ed9205146ad753b0d4001815, type: 3}
   m_Name: 
@@ -231,3 +233,39 @@ MonoBehaviour:
   slalomForce: 40
   turnTimer: 0.75
   forceScaler: 0.05
+--- !u!114 &8516591226268749691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8516591225940507008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b5bd807299f1742934a09a4d2dd4d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftEdge: {fileID: 0}
+  rightEdge: {fileID: 0}
+  willToNotCrashAndDie: 2
+  distanceInfluenceScalar: 0.001
+  prevDistLeft: 5
+  prevDistRight: 5
+--- !u!114 &8516591226268749699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8516591225940507008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04209cb17550e14787671640c246d85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  safeSpeed: 5
+  turnSwitchDelay: 1.5
+  turnForce: 25
+  minTurnAllowedDistance: 6
+  minSpeed: 2
+  minSpeedPreventionScalar: 2
