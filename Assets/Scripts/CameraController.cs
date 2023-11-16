@@ -7,7 +7,10 @@ public class CameraController : MonoBehaviour
     public GameObject pivotPoint;
     public float camSensitivity = 5f;
     public float updateSkierListCooldown = 1f;
-    
+    public float scrollSpeed = 0.5f;
+    Camera cam;
+
+
     private List<GameObject> skiers;
 
     private float skierUpdateTimer = 0f;
@@ -15,6 +18,7 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         skiers = new List<GameObject>();
+        cam = GetComponentInChildren<Camera>();
         UpdateSkierList();
     }
 
@@ -35,8 +39,8 @@ public class CameraController : MonoBehaviour
 
         Vector3 eulerRotation = new(movY, movX);
 
-        // transform.Rotate(eulerRotation);
-
+        Vector3 mouseZoom = new Vector3(0, 0, Input.mouseScrollDelta.y * scrollSpeed);
+        cam.transform.Translate(mouseZoom);
 
         // Keep Z rotation at 0
         Vector3 eulerAngles = transform.eulerAngles;
