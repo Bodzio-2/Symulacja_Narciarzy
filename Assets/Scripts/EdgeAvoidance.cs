@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class EdgeAvoidance : MonoBehaviour
 {
-    [HideInInspector]public Collider leftEdge;
-    [HideInInspector]public Collider rightEdge;
+    private Collider leftEdge;
+    private Collider rightEdge;
+
+    private Slope _slope;
+
     
     [SerializeField] float willToNotCrashAndDie = 10f;
     [SerializeField] float distanceInfluenceScalar = 5f;
@@ -13,8 +16,8 @@ public class EdgeAvoidance : MonoBehaviour
     private Rigidbody rb;
 
 
-    public float prevDistLeft = 5f;
-    public float prevDistRight = 5f;
+    [HideInInspector]public float prevDistLeft = 5f;
+    [HideInInspector]public float prevDistRight = 5f;
 
 
     float helpTimer = 0.0f;
@@ -22,13 +25,42 @@ public class EdgeAvoidance : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        _slope = FindObjectOfType<Slope> ();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        FindNearestEdges();
         if (leftEdge && rightEdge)
         {
             CruiseControl();
+        }
+    }
+
+    private void FindNearestEdges()
+    {
+        if (!leftEdge)
+            leftEdge = _slope.GetLeftEdges()[0];
+        foreach(Collider edge in _slope.GetLeftEdges())
+        {
+            if(CalculateDistanceToEdge(edge) < CalculateDistanceToEdge(leftEdge))
+            {
+                leftEdge = edge;
+                Vector3 point = leftEdge.ClosestPoint(transform.position);
+                // Debug.DrawLine(transform.position, point, Color.green);
+            }
+        }
+
+        if (!rightEdge)
+            rightEdge = _slope.GetRightEdges()[0];
+        foreach (Collider edge in _slope.GetRightEdges())
+        {
+            if (CalculateDistanceToEdge(edge) < CalculateDistanceToEdge(rightEdge))
+            {
+                rightEdge = edge;
+                Vector3 point = rightEdge.ClosestPoint(transform.position);
+                // Debug.DrawLine(transform.position, point, Color.green);
+            }
         }
     }
 
@@ -36,7 +68,7 @@ public class EdgeAvoidance : MonoBehaviour
     {
         Vector3 closestPoint = edge.ClosestPoint(transform.position);
         float dist = Vector3.Distance(closestPoint, transform.position);
-        Debug.DrawLine(transform.position, closestPoint, Color.green);
+        // Debug.DrawLine(transform.position, closestPoint, Color.green);
         return dist;
     }
 
@@ -47,6 +79,12 @@ public class EdgeAvoidance : MonoBehaviour
         float new_dist = CalculateDistanceToEdge(edge);
         float approach_speed = (prevDist - new_dist) / Time.deltaTime;
         return (approach_speed, new_dist);
+    }
+
+    Vector3 CalculateEdgeForce(float scalar, Vector3 distance)
+    {
+        Vector3 velocity = rb.velocity;
+        return Vector3.Cross((scalar * distance), new Vector3(1/distance.x, 1/distance.y, 1/distance.z)); 
     }
 
     // Main function that makes sure the skier doesn't f***ing crash into the edge of our slope
@@ -61,7 +99,11 @@ public class EdgeAvoidance : MonoBehaviour
         {
             // We're closing in on the left edge
             /** (1/(CalculateDistanceToEdge(rightEdge) * distanceInfluenceScalar)) */
-            rb.AddForce(CalculateAwayVector(leftEdge) * willToNotCrashAndDie * left_approach_speed);
+            rb.AddForce(CalculateAwayVector(leftEdge) * willToNotCrashAndDie * left_approach_speed / prevDistLeft, ForceMode.Impulse);
+            //rb.AddForce(CalculateEdgeForce(1f, leftEdge.ClosestPoint(transform.position)), ForceMode.Impulse);
+            Debug.DrawRay(transform.position, CalculateAwayVector(leftEdge) * willToNotCrashAndDie * left_approach_speed / prevDistLeft, Color.cyan);
+            //Debug.DrawRay(transform.position, CalculateEdgeForce(1f, leftEdge.ClosestPoint(transform.position)), Color.cyan);
+            Debug.Log(rb);
             // Debug.Log("Force: " + (willToNotCrashAndDie * left_approach_speed / (prevDistLeft * prevDistLeft * distanceInfluenceScalar)));
         }
 
@@ -69,7 +111,11 @@ public class EdgeAvoidance : MonoBehaviour
         {
             // We're closing in on the right edge
             /** (1/(CalculateDistanceToEdge(leftEdge) * distanceInfluenceScalar))*/
-            rb.AddForce(CalculateAwayVector(rightEdge) * willToNotCrashAndDie * right_approach_speed);
+            rb.AddForce(CalculateAwayVector(rightEdge) * willToNotCrashAndDie * right_approach_speed / prevDistRight, ForceMode.Impulse);
+            //rb.AddForce(CalculateEdgeForce(1f, rightEdge.ClosestPoint(transform.position)), ForceMode.Impulse);
+            Debug.DrawRay(transform.position, CalculateAwayVector(rightEdge) * willToNotCrashAndDie * right_approach_speed / prevDistRight, Color.cyan);
+            //Debug.DrawRay(transform.position, CalculateEdgeForce(1f, rightEdge.ClosestPoint(transform.position)), Color.cyan);
+            Debug.Log(rb);
             // Debug.Log("Force: " + (willToNotCrashAndDie * right_approach_speed / (prevDistRight * prevDistRight * distanceInfluenceScalar)));
         }
 

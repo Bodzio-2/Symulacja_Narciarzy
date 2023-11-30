@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class SlopeSector : MonoBehaviour
 {
-    [SerializeField] private Collider leftEdge;
-    [SerializeField] private Collider rightEdge;
+    public Collider leftEdge;
+    public Collider rightEdge;
 
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out EdgeAvoidance avoid))
@@ -14,5 +15,5 @@ public class SlopeSector : MonoBehaviour
             avoid.leftEdge = leftEdge;
             avoid.rightEdge = rightEdge;
         }
-    }
+    }*/
 }

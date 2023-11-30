@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Skier
+  - Slope Sector
   layers:
   - Default
   - TransparentFX
