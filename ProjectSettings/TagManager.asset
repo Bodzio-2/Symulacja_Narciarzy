@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Skier
   - Slope Sector
+  - Slope Finish
   layers:
   - Default
   - TransparentFX

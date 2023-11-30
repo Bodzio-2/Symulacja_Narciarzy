@@ -25,8 +25,10 @@ public class EdgeAvoidance : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        _slope = FindObjectOfType<Slope> ();
+        _slope = FindObjectOfType<Slope>();
     }
+
+   
 
     private void FixedUpdate()
     {
@@ -100,26 +102,26 @@ public class EdgeAvoidance : MonoBehaviour
             // We're closing in on the left edge
             /** (1/(CalculateDistanceToEdge(rightEdge) * distanceInfluenceScalar)) */
             rb.AddForce(CalculateAwayVector(leftEdge) * willToNotCrashAndDie * left_approach_speed / prevDistLeft, ForceMode.Impulse);
-            //rb.AddForce(CalculateEdgeForce(0.5f, leftEdge.ClosestPoint(transform.position)) * CalculateAwayVector(leftEdge), ForceMode.Impulse);
             Debug.DrawRay(transform.position, CalculateAwayVector(leftEdge) * willToNotCrashAndDie * left_approach_speed / prevDistLeft, Color.cyan);
+
+            //rb.AddForce(CalculateEdgeForce(0.5f, leftEdge.ClosestPoint(transform.position)) * CalculateAwayVector(leftEdge), ForceMode.Impulse);
             //Debug.DrawRay(transform.position, CalculateEdgeForce(0.5f, leftEdge.ClosestPoint(transform.position)) * CalculateAwayVector(leftEdge), Color.cyan);
-            Debug.Log(rb);
             // Debug.Log("Force: " + (willToNotCrashAndDie * left_approach_speed / (prevDistLeft * prevDistLeft * distanceInfluenceScalar)));
         }
 
-        if(right_approach_speed > 0)
+        if (right_approach_speed > 0)
         {
             // We're closing in on the right edge
             /** (1/(CalculateDistanceToEdge(leftEdge) * distanceInfluenceScalar))*/
             rb.AddForce(CalculateAwayVector(rightEdge) * willToNotCrashAndDie * right_approach_speed / prevDistRight, ForceMode.Impulse);
-            //rb.AddForce(CalculateEdgeForce(0.5f, rightEdge.ClosestPoint(transform.position)) * CalculateAwayVector(rightEdge), ForceMode.Impulse);
             Debug.DrawRay(transform.position, CalculateAwayVector(rightEdge) * willToNotCrashAndDie * right_approach_speed / prevDistRight, Color.cyan);
+
+            //rb.AddForce(CalculateEdgeForce(0.5f, rightEdge.ClosestPoint(transform.position)) * CalculateAwayVector(rightEdge), ForceMode.Impulse);
             //Debug.DrawRay(transform.position, CalculateEdgeForce(0.5f, rightEdge.ClosestPoint(transform.position)) * CalculateAwayVector(rightEdge), Color.cyan);
-            Debug.Log(rb);
             // Debug.Log("Force: " + (willToNotCrashAndDie * right_approach_speed / (prevDistRight * prevDistRight * distanceInfluenceScalar)));
         }
 
-
+        /*
         // For logging purposes only
         if (Time.time > helpTimer)
         {
@@ -127,7 +129,7 @@ public class EdgeAvoidance : MonoBehaviour
             Debug.Log("Approaching left edge with speed: " + left_approach_speed);
             Debug.Log("Approaching right edge with speed: " + right_approach_speed);
             helpTimer += 1f;
-        }
+        }*/
     }
 
     // Calculates direction vector AWAY from the edge

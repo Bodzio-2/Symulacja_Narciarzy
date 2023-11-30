@@ -41,10 +41,15 @@ public class TurnController : MonoBehaviour
             beenTurning = true;
             // Turn 
             if (turnLeft && edgeAvoidance.prevDistRight < minTurnAllowedDistance)
+            {
                 turnLeft = false;
+            }
             else if (!turnLeft && edgeAvoidance.prevDistLeft < minTurnAllowedDistance)
+            {
                 turnLeft = true;
+            }
 
+            
             /*
             // Preventing turning too much and starting going up
             if (Mathf.Abs(Vector3.Angle(rb.velocity.normalized, velocityVectorBeforeTurn)) > 80f)
@@ -55,7 +60,7 @@ public class TurnController : MonoBehaviour
             */
 
             if (turnLeft) 
-            { 
+            {
                 // Turn left
                 Vector3 leftTurnDir = Vector3.Cross(rb.velocity, Vector3.up).normalized;
                 Debug.DrawRay(transform.position, leftTurnDir, Color.red);
@@ -74,6 +79,7 @@ public class TurnController : MonoBehaviour
             velocityVectorBeforeTurn = rb.velocity.normalized;
             if(beenTurning)
             {
+                Debug.Log("Switch things up!");
                 // if(!(edgeAvoidance.prevDistLeft < minTurnAllowedDistance) && !(edgeAvoidance.prevDistRight < minTurnAllowedDistance))
                 turnLeft = !turnLeft;
                 beenTurning = false;
@@ -92,6 +98,6 @@ public class TurnController : MonoBehaviour
     void Turn(Vector3 dir)
     {
         rb.AddForce(dir * turnForce);
-        rb.AddForce(-rb.velocity.normalized * ninjaSlowDownScalar);
+        //rb.AddForce(-rb.velocity.normalized * ninjaSlowDownScalar);
     }
 }

@@ -11,7 +11,6 @@ public class Slope : MonoBehaviour
         leftEdges = new List<Collider>();
         rightEdges = new List<Collider>();
         foreach(SlopeSector sector in GetComponentsInChildren<SlopeSector>()){
-            Debug.Log(sector);
             //SlopeSector sector = _sector.GetComponent<SlopeSector>();
             leftEdges.Add(sector.leftEdge);
             rightEdges.Add(sector.rightEdge);
