@@ -8,6 +8,7 @@ public class EdgeAvoidance : MonoBehaviour
     private Collider rightEdge;
 
     private Slope _slope;
+    private TurnController _turnController;
 
     
     [SerializeField] float willToNotCrashAndDie = 10f;
@@ -26,6 +27,7 @@ public class EdgeAvoidance : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         _slope = FindObjectOfType<Slope>();
+        _turnController = GetComponent<TurnController>();
     }
 
    
@@ -33,7 +35,7 @@ public class EdgeAvoidance : MonoBehaviour
     private void FixedUpdate()
     {
         FindNearestEdges();
-        if (leftEdge && rightEdge)
+        if (leftEdge && rightEdge && !_turnController.finishLine)
         {
             CruiseControl();
         }

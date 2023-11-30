@@ -19,6 +19,8 @@ public class TurnController : MonoBehaviour
     EdgeAvoidance edgeAvoidance;
     Vector3 velocityVectorBeforeTurn;
 
+    public bool finishLine = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -28,7 +30,10 @@ public class TurnController : MonoBehaviour
 
     private void Update()
     {
-        ControlTurning();
+        if (!finishLine)
+            ControlTurning();
+        else
+            Stop();
     }
 
 
@@ -79,7 +84,6 @@ public class TurnController : MonoBehaviour
             velocityVectorBeforeTurn = rb.velocity.normalized;
             if(beenTurning)
             {
-                Debug.Log("Switch things up!");
                 // if(!(edgeAvoidance.prevDistLeft < minTurnAllowedDistance) && !(edgeAvoidance.prevDistRight < minTurnAllowedDistance))
                 turnLeft = !turnLeft;
                 beenTurning = false;
@@ -98,6 +102,26 @@ public class TurnController : MonoBehaviour
     void Turn(Vector3 dir)
     {
         rb.AddForce(dir * turnForce);
-        //rb.AddForce(-rb.velocity.normalized * ninjaSlowDownScalar);
+        rb.AddForce(-rb.velocity.normalized * ninjaSlowDownScalar);
+    }
+
+    private void Stop()
+    {
+        if (rb.velocity.magnitude > 0.5f)
+        {
+            if(edgeAvoidance.prevDistLeft > edgeAvoidance.prevDistRight)
+                rb.AddForce(Vector3.Cross(rb.velocity, -Vector3.up).normalized * turnForce / 2);
+            else
+                rb.AddForce(Vector3.Cross(rb.velocity, Vector3.up).normalized * turnForce / 2);
+            rb.AddForce(-rb.velocity.normalized * 5f);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Slope Finish")
+        {
+            finishLine = true;
+        }
     }
 }
