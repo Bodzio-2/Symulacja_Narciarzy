@@ -19,8 +19,8 @@ public class TurnController : MonoBehaviour
     public float turnTimeoutTime;
 
     Rigidbody rb;
-    public bool beenTurning = false;
-    public bool turnLeft = true;
+    public bool isTurning = false;
+    public bool nextTurnLeft = true;
     EdgeAvoidance edgeAvoidance;
     Vector3 velocityVectorBeforeTurn;
 
@@ -44,7 +44,7 @@ public class TurnController : MonoBehaviour
         currentSpeed = rb.velocity.magnitude; 
         if(rb.velocity.magnitude > minTurnSpeed && turnTimeoutTime > turnSwitchDelay)
         {
-            if(beenTurning)
+            if(isTurning)
             {
                 turnStartTime+=Time.deltaTime;
             }
@@ -52,15 +52,15 @@ public class TurnController : MonoBehaviour
                 turnStartTime = 0.0f;
             }
             
-            beenTurning = true;
+            isTurning = true;
             // Turn 
-            if (turnLeft && edgeAvoidance.prevDistRight < minTurnAllowedDistance)
+            if (nextTurnLeft && edgeAvoidance.prevDistRight < minTurnAllowedDistance)
             {
-                turnLeft = false;
+                nextTurnLeft = false;
             }
-            else if (!turnLeft && edgeAvoidance.prevDistLeft < minTurnAllowedDistance)
+            else if (!nextTurnLeft && edgeAvoidance.prevDistLeft < minTurnAllowedDistance)
             {
-                turnLeft = true;
+                nextTurnLeft = true;
             }
 
             
@@ -73,7 +73,7 @@ public class TurnController : MonoBehaviour
             }
             */
 
-            if (turnLeft) 
+            if (nextTurnLeft) 
             {
                 // Turn left
                 Vector3 leftTurnDir = Vector3.Cross(rb.velocity, Vector3.up).normalized;
@@ -93,12 +93,12 @@ public class TurnController : MonoBehaviour
         {   
             
             velocityVectorBeforeTurn = rb.velocity.normalized;
-            if(beenTurning)
+            if(isTurning)
             {
                 // Debug.Log("Switch things up!");
                 // if(!(edgeAvoidance.prevDistLeft < minTurnAllowedDistance) && !(edgeAvoidance.prevDistRight < minTurnAllowedDistance))
-                turnLeft = !turnLeft;
-                beenTurning = false;
+                nextTurnLeft = !nextTurnLeft;
+                isTurning = false;
                 turnTimeoutTime = 0.0f;
 
             }
