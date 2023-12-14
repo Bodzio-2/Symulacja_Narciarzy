@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8516591225940507008
+--- !u!1 &1372450045772087251
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,53 +8,53 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8516591225940507015}
-  - component: {fileID: 8516591225940507012}
-  - component: {fileID: 8516591225940507013}
-  - component: {fileID: 8516591225940507010}
-  - component: {fileID: 8516591225940507011}
-  - component: {fileID: 764507904}
-  - component: {fileID: 764507903}
-  - component: {fileID: 8516591226268749691}
-  - component: {fileID: 8516591226268749699}
-  - component: {fileID: -3016517278366951556}
+  - component: {fileID: 1852913192480957859}
+  - component: {fileID: 8201544972078828668}
+  - component: {fileID: 7010433385489181426}
+  - component: {fileID: 1431923262776335669}
+  - component: {fileID: 6781632572083620719}
+  - component: {fileID: 2504844993040220455}
+  - component: {fileID: 5524094455241745514}
+  - component: {fileID: 3129310830851209965}
+  - component: {fileID: 8085974285462834269}
+  - component: {fileID: 3747778593155444985}
   m_Layer: 0
-  m_Name: Skier
+  m_Name: MediumSkier
   m_TagString: Skier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8516591225940507015
+--- !u!4 &1852913192480957859
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516591225940507008}
+  m_GameObject: {fileID: 1372450045772087251}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.27, y: 15.38, z: 9.57}
+  m_LocalPosition: {x: 254.8838, y: 0.50905186, z: 243.82925}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8516591225940507012
+--- !u!33 &8201544972078828668
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516591225940507008}
+  m_GameObject: {fileID: 1372450045772087251}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &8516591225940507013
+--- !u!23 &7010433385489181426
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516591225940507008}
+  m_GameObject: {fileID: 1372450045772087251}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 86e8f96590ffe774ba3bb92e93c84871, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,13 +90,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &8516591225940507010
+--- !u!136 &1431923262776335669
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516591225940507008}
+  m_GameObject: {fileID: 1372450045772087251}
   m_Material: {fileID: 13400000, guid: 113ac353420d5314ebdaf97cd9a00b6f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -104,13 +104,13 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8516591225940507011
+--- !u!54 &6781632572083620719
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516591225940507008}
+  m_GameObject: {fileID: 1372450045772087251}
   serializedVersion: 2
   m_Mass: 20
   m_Drag: 0.01
@@ -120,14 +120,14 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!96 &764507904
+--- !u!96 &2504844993040220455
 TrailRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516591225940507008}
+  m_GameObject: {fileID: 1372450045772087251}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -141,7 +141,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 4ff996e3a0a5743a3987ab6231160665, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -162,7 +162,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 20
+  m_Time: 40
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -183,8 +183,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0, b: 0, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.19215685, g: 1, b: 0.24291131, a: 1}
+      key1: {r: 0.19215685, g: 1, b: 0.24291131, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -207,7 +207,7 @@ TrailRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -219,13 +219,13 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &764507903
+--- !u!114 &5524094455241745514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516591225940507008}
+  m_GameObject: {fileID: 1372450045772087251}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6ceca53ed9205146ad753b0d4001815, type: 3}
@@ -234,13 +234,13 @@ MonoBehaviour:
   slalomForce: 40
   turnTimer: 0.75
   forceScaler: 0.05
---- !u!114 &8516591226268749691
+--- !u!114 &3129310830851209965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516591225940507008}
+  m_GameObject: {fileID: 1372450045772087251}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32b5bd807299f1742934a09a4d2dd4d5, type: 3}
@@ -248,47 +248,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   willToNotCrashAndDie: 2
   distanceInfluenceScalar: 0.001
-  prevDistLeft: 5
-  prevDistRight: 5
---- !u!114 &8516591226268749699
+  prevDistLeft: 13.506117
+  prevDistRight: 10.69734
+--- !u!114 &8085974285462834269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516591225940507008}
+  m_GameObject: {fileID: 1372450045772087251}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e04209cb17550e14787671640c246d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   minTurnSpeed: 5
-  turnSwitchDelay: 1.5
-  turnForce: 25
-  currentSpeed: 0
-  leftDist: 0
-  rightDist: 0
-  minTurnAllowedDistance: 6
-  minSpeed: 2
+  turnSwitchDelay: 1
+  turnForce: 60
+  currentSpeed: 2.3403792
+  leftDist: 13.506117
+  rightDist: 10.69734
+  minTurnAllowedDistance: 2
+  minSpeed: 2.5
   minSpeedPreventionScalar: 2
   ninjaSlowDownScalar: 2
-  turnStartTime: 0
-  turnTimeout: 0
+  turnStartTime: 1.2999994
+  turnTimeoutTime: 1.679999
   beenTurning: 0
   turnLeft: 1
---- !u!114 &-3016517278366951556
+--- !u!114 &3747778593155444985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516591225940507008}
+  m_GameObject: {fileID: 1372450045772087251}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24283a56136ed894aacd0886745dfa24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 0
-  distScalar: 0
-  speedTimesViewDistance: 2
-  skiers: []
+  angle: 92.479965
+  distScalar: -0.80809873
+  speedTimesViewDistance: 2.0506163
+  skiers:
+  - {fileID: 0}
+  - {fileID: 1372450045772087251}

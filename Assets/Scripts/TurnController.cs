@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class TurnController : MonoBehaviour
 {
-    [SerializeField] float safeSpeed = 5f;
-    [SerializeField] float turnSwitchDelay = 1.5f;
-    [SerializeField] float turnForce = 5f;
-    [SerializeField] float minTurnAllowedDistance = 4f;
-    [SerializeField] float minSpeed = 2f;
-    [SerializeField] float minSpeedPreventionScalar = 2f;
-    [SerializeField] float ninjaSlowDownScalar = 2f;
+    public float minTurnSpeed = 5f;
+    public float turnSwitchDelay = 1.5f;
+    public float turnForce = 5f;
+    public float currentSpeed;
 
+    public float leftDist;
+    public float rightDist;
+    public float minTurnAllowedDistance = 4f;
+    public float minSpeed = 2f;
+    public float minSpeedPreventionScalar = 2f;
+    public float ninjaSlowDownScalar = 2f;
+    public float turnStartTime;
+    public float turnTimeoutTime;
 
     Rigidbody rb;
-    bool beenTurning = false;
-    bool turnLeft = true;
+    public bool beenTurning = false;
+    public bool turnLeft = true;
     EdgeAvoidance edgeAvoidance;
     Vector3 velocityVectorBeforeTurn;
 
@@ -26,7 +31,7 @@ public class TurnController : MonoBehaviour
         velocityVectorBeforeTurn = Vector3.forward;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         ControlTurning();
     }
@@ -34,10 +39,19 @@ public class TurnController : MonoBehaviour
 
     void ControlTurning()
     {
-        if(rb.velocity.magnitude > safeSpeed)
+        leftDist = edgeAvoidance.prevDistLeft;
+        rightDist=edgeAvoidance.prevDistRight;
+        currentSpeed = rb.velocity.magnitude; 
+        if(rb.velocity.magnitude > minTurnSpeed && turnTimeoutTime > turnSwitchDelay)
         {
-
-
+            if(beenTurning)
+            {
+                turnStartTime+=Time.deltaTime;
+            }
+            else{
+                turnStartTime = 0.0f;
+            }
+            
             beenTurning = true;
             // Turn 
             if (turnLeft && edgeAvoidance.prevDistRight < minTurnAllowedDistance)
@@ -63,41 +77,74 @@ public class TurnController : MonoBehaviour
             {
                 // Turn left
                 Vector3 leftTurnDir = Vector3.Cross(rb.velocity, Vector3.up).normalized;
-                Debug.DrawRay(transform.position, leftTurnDir, Color.red);
+                // Debug.DrawRay(transform.position, leftTurnDir, Color.red);
                 Turn(leftTurnDir);
             }
             else
             {
                 // Turn right
                 Vector3 rightTurnDir = Vector3.Cross(rb.velocity, -Vector3.up).normalized;
-                Debug.DrawRay(transform.position, rightTurnDir, Color.red);
+                // Debug.DrawRay(transform.position, rightTurnDir, Color.red);
                 Turn(rightTurnDir);
+                
             }
         }
         else
-        {
+        {   
+            
             velocityVectorBeforeTurn = rb.velocity.normalized;
             if(beenTurning)
             {
-                Debug.Log("Switch things up!");
+                // Debug.Log("Switch things up!");
                 // if(!(edgeAvoidance.prevDistLeft < minTurnAllowedDistance) && !(edgeAvoidance.prevDistRight < minTurnAllowedDistance))
                 turnLeft = !turnLeft;
                 beenTurning = false;
+                turnTimeoutTime = 0.0f;
+
             }
+            turnTimeoutTime += Time.deltaTime;
         }
 
         // What if we're too slow
         if (rb.velocity.magnitude < minSpeed)
         {
-            rb.AddForce(rb.velocity.normalized * minSpeedPreventionScalar);
-            Debug.DrawRay(transform.position, rb.velocity.normalized * minSpeedPreventionScalar, Color.yellow);
+            rb.AddForce(rb.velocity.normalized * minSpeedPreventionScalar * 10);
+            // Debug.DrawRay(transform.position, rb.velocity.normalized * minSpeedPreventionScalar, Color.yellow);
         }
 
     }
 
     void Turn(Vector3 dir)
     {
-        rb.AddForce(dir * turnForce);
-        //rb.AddForce(-rb.velocity.normalized * ninjaSlowDownScalar);
+        rb.AddForce(dir * turnForce * RandomGaussian(0.8f,1.2f));
+        if(turnStartTime>0.1)
+        {
+            rb.AddForce(-rb.velocity.normalized * ninjaSlowDownScalar);
+        }
+        
     }
+
+        public static float RandomGaussian(float minValue = 0.0f, float maxValue = 1.0f)
+{
+    float u, v, S;
+
+    do
+    {
+        u = 2.0f * UnityEngine.Random.value - 1.0f;
+        v = 2.0f * UnityEngine.Random.value - 1.0f;
+        S = u * u + v * v;
+    }
+    while (S >= 1.0f);
+
+    // Standard Normal Distribution
+    float std = u * Mathf.Sqrt(-2.0f * Mathf.Log(S) / S);
+
+    // Normal Distribution centered between the min and max value
+    // and clamped following the "three-sigma rule"
+    float mean = (minValue + maxValue) / 2.0f;
+    float sigma = (maxValue - mean) / 3.0f;
+    return Mathf.Clamp(std * sigma + mean, minValue, maxValue);
 }
+
+}
+
