@@ -33,7 +33,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 110161422524874587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 255.10184, y: -0.56128865, z: 250.16576}
+  m_LocalPosition: {x: 255.10184, y: -4.63, z: 242.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -68,8 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7d5c9fc287a2aa945a98203d41282923, type: 2}
-  - {fileID: 2100000, guid: 163b613454ecb3c47a13be4b01584350, type: 2}
+  - {fileID: 2100000, guid: 87c95634bf300a540bfe35d21cb359f3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -167,17 +166,17 @@ MonoBehaviour:
   minTurnSpeed: 3.2
   turnSwitchDelay: 1
   turnForce: 100
-  currentSpeed: 4.2811255
-  leftDist: 13.020267
-  rightDist: 10.609949
+  currentSpeed: 0
+  leftDist: 0
+  rightDist: 0
   minTurnAllowedDistance: 4.2
   minSpeed: 2.5
   minSpeedPreventionScalar: 2
-  ninjaSlowDownScalar: 2
-  turnStartTime: 1.2999994
+  ninjaSlowDownScalar: 3
+  turnStartTime: 0
   turnTimeoutTime: 0
-  beenTurning: 1
-  turnLeft: 0
+  isTurning: 0
+  nextTurnLeft: 1
 --- !u!114 &8167535267144548859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,9 +189,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24283a56136ed894aacd0886745dfa24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 52.944054
-  distScalar: -0.80809873
-  speedTimesViewDistance: 2
+  angle: 0
+  distScalar: 0
+  speedTimesViewDistance: 4
   skiers:
   - {fileID: 110161422524874587}
   - {fileID: 0}
@@ -260,8 +259,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.23985407, g: 0.8884094, b: 0.9245283, a: 1}
-      key1: {r: 0.23985407, g: 0.8884094, b: 0.9245283, a: 1}
+      key0: {r: 0.051886797, g: 1, b: 0.14071567, a: 1}
+      key1: {r: 0.051886797, g: 1, b: 0.14071567, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

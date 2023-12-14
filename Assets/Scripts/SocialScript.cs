@@ -33,11 +33,11 @@ public class SocialScript : MonoBehaviour
                     // Debug.DrawRay(transform.position, target);
                     distScalar = (target.magnitude)/(velocityVector.magnitude*speedTimesViewDistance)-1;
 
-                    distScalar = Mathf.Pow(distScalar,3);                        
+                    // distScalar = Mathf.Pow(distScalar,3);                        
 
                     
                     if(distScalar<-0.1){
-                        rb.AddForce(target*distScalar*30);
+                        rb.AddForce(target*distScalar*50);
                         Debug.DrawRay(transform.position, target*distScalar, Color.red);
                     }
                 }
