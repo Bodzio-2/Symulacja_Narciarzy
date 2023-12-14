@@ -35,7 +35,7 @@ public class EdgeAvoidance : MonoBehaviour
     private void FixedUpdate()
     {
         FindNearestEdges();
-        if (leftEdge && rightEdge && !_turnController.finishLine)
+        if (leftEdge && rightEdge)
         {
             CruiseControl();
         }
