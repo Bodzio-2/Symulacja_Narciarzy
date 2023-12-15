@@ -25,20 +25,26 @@ public class SocialScript : MonoBehaviour
     {
         var velocityVector = rb.velocity;
         foreach(GameObject skier in skiers){
-            if(skier.transform != transform){
-                Vector3 target = skier.transform.position - transform.position;
-                angle = Vector3.Angle(target, rb.velocity.normalized);
-  
-                if (angle<90.0f && target.magnitude <velocityVector.magnitude*speedTimesViewDistance){
-                    // Debug.DrawRay(transform.position, target);
-                    distScalar = (target.magnitude)/(velocityVector.magnitude*speedTimesViewDistance)-1;
+            if (skier)
+            {
+                if (skier.transform != transform)
+                {
+                    Vector3 target = skier.transform.position - transform.position;
+                    angle = Vector3.Angle(target, rb.velocity.normalized);
 
-                    // distScalar = Mathf.Pow(distScalar,3);                        
+                    if (angle < 90.0f && target.magnitude < velocityVector.magnitude * speedTimesViewDistance)
+                    {
+                        // Debug.DrawRay(transform.position, target);
+                        distScalar = (target.magnitude) / (velocityVector.magnitude * speedTimesViewDistance) - 1;
 
-                    
-                    if(distScalar<-0.1){
-                        rb.AddForce(target*distScalar*50);
-                        Debug.DrawRay(transform.position, target*distScalar, Color.red);
+                        // distScalar = Mathf.Pow(distScalar,3);                        
+
+
+                        if (distScalar < -0.1)
+                        {
+                            rb.AddForce(target * distScalar * 50);
+                            Debug.DrawRay(transform.position, target * distScalar, Color.red);
+                        }
                     }
                 }
             }

@@ -9,6 +9,9 @@ using System.Text;
 public class HeatMapDumper : MonoBehaviour
 {
     List<Vector3> playerPositions = new List<Vector3>();
+    List<Vector4> playerSpeeds = new List<Vector4>();
+
+    private List<GameObject> skiers = new List<GameObject>();
 
     public float heatmapGenerationCooldown = 10f;
 
@@ -38,6 +41,7 @@ public class HeatMapDumper : MonoBehaviour
         {
             heatmapTimer = Time.time + heatmapGenerationCooldown;
             AppendData();
+            AppendSpeeds();
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -48,11 +52,22 @@ public class HeatMapDumper : MonoBehaviour
 
     private void AppendData()
     {
-        GameObject[] skiers = GameObject.FindGameObjectsWithTag("Skier");
+        //GameObject[] skiers = GameObject.FindGameObjectsWithTag("Skier");
 
         foreach(GameObject skier in skiers)
         {
-            playerPositions.Add(new Vector3(skier.transform.position.x, 0, skier.transform.position.z));
+            if(skier)
+                playerPositions.Add(new Vector3(skier.transform.position.x, 0, skier.transform.position.z));
+        }
+    }
+
+    private void AppendSpeeds()
+    {
+        //GameObject[] skiers = GameObject.FindGameObjectsWithTag("Skier");
+        foreach(GameObject skier in skiers)
+        {
+            if(skier)
+                playerSpeeds.Add(new Vector4(skier.transform.position.x, 0, skier.transform.position.z, skier.GetComponent<Rigidbody>().velocity.magnitude));
         }
     }
 
@@ -81,13 +96,38 @@ public class HeatMapDumper : MonoBehaviour
             float _x = pos.x;
             float _y = pos.y;
             float _z = pos.z;
+            if (_x < 0 || _z < 0)
+                continue;
             string newLine = string.Format("{0}; {1}; {2}", _x, _y, _z);
             csv.AppendLine(newLine);
         }
         File.WriteAllText(path, csv.ToString());
 
+        string speedPath = savePath + "Heatmap-Dump-Speeds" + curDate.Year + "_" + curDate.Month + "_" + curDate.Day + "_" + curDate.Hour + "_" + curDate.Minute + "_" + curDate.Second + ".csv";
+        csv = csv.Clear();
+        foreach (Vector4 pos in playerSpeeds)
+        {
+            float _x = pos.x;
+            float _y = pos.y;
+            float _z = pos.z;
+            float _speed = pos.w;
+            if (_x < 0 || _z < 0)
+                continue;
+            string newLine = string.Format("{0}; {1}; {2}; {3}", _x, _y, _z, _speed);
+            csv.AppendLine(newLine);
+        }
+        File.WriteAllText(speedPath, csv.ToString());
+
         Debug.Log("Dumped to CSV");
     }
 
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Skier")
+        {
+            skiers.Add(other.gameObject);
+        }   
+    }
+
 }

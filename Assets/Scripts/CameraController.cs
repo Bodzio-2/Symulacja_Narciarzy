@@ -25,7 +25,12 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        transform.position = pivotPoint.transform.position;
+        if(pivotPoint)
+            transform.position = pivotPoint.transform.position;
+        else
+        {
+            pivotPoint = skiers[0];
+        }
         MouseControl();
         UpdateSkierList();
         if(Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(0))
@@ -52,12 +57,14 @@ public class CameraController : MonoBehaviour
         if (Time.time > skierUpdateTimer)
         {
             GameObject[] new_skiers = GameObject.FindGameObjectsWithTag("Skier");
+            skiers = new List<GameObject>();
             foreach (GameObject skier in new_skiers)
             {
-                if (!skiers.Contains(skier))
+                /*if (!skiers.Contains(skier))
                 {
                     skiers.Add(skier);
-                }
+                }*/
+                skiers.Add(skier);
             }
             skierUpdateTimer = Time.time + updateSkierListCooldown;
         }
