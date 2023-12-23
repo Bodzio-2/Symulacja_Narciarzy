@@ -85,10 +85,24 @@ public class EdgeAvoidance : MonoBehaviour
         return (approach_speed, new_dist);
     }
 
-    float CalculateEdgeForce(float scalar, Vector3 distance)
+    Vector3 CalculateLeftEdgeForce(float scalar, float scalar1, Vector3 edgePoint)
     {
         Vector3 velocity = rb.velocity;
-        return Vector3.Cross((scalar * new Vector3(velocity.x, 0f, velocity.z)), new Vector3(1/distance.x, 0f, 1/distance.z)).magnitude; 
+        //Debug.DrawRay(transform.position, velocity, Color.black);
+        //Debug.DrawLine(transform.position, edgePoint, Color.blue);
+        //Debug.DrawRay(transform.position, scalar1 * transform.up / Vector3.Distance(transform.position, edgePoint), Color.green);
+        //Debug.DrawRay(transform.position, scalar * Vector3.Cross((new Vector3(velocity.x, 0f, velocity.z)), scalar1 * transform.up / Vector3.Distance(transform.position, edgePoint)), Color.cyan);
+        return scalar * Vector3.Cross(( new Vector3(velocity.x, 0f, velocity.z)), scalar1 * transform.up / Vector3.Distance(transform.position, edgePoint)); 
+    }
+
+    Vector3 CalculateRightEdgeForce(float scalar, float scalar1, Vector3 edgePoint)
+    {
+        Vector3 velocity = rb.velocity;
+        //Debug.DrawRay(transform.position, velocity, Color.black);
+        //Debug.DrawLine(transform.position, edgePoint, Color.blue);
+        //Debug.DrawRay(transform.position, scalar1 * -transform.up / Vector3.Distance(transform.position, edgePoint), Color.green);
+        //Debug.DrawRay(transform.position, scalar * Vector3.Cross((new Vector3(velocity.x, 0f, velocity.z)), scalar1 * -transform.up / Vector3.Distance(transform.position, edgePoint)), Color.cyan);
+        return scalar * Vector3.Cross((new Vector3(velocity.x, 0f, velocity.z)), scalar1 * -transform.up / Vector3.Distance(transform.position, edgePoint));
     }
 
     // Main function that makes sure the skier doesn't f***ing crash into the edge of our slope
@@ -103,11 +117,11 @@ public class EdgeAvoidance : MonoBehaviour
         {
             // We're closing in on the left edge
             /** (1/(CalculateDistanceToEdge(rightEdge) * distanceInfluenceScalar)) */
-            rb.AddForce(CalculateAwayVector(leftEdge) * willToNotCrashAndDie * left_approach_speed / prevDistLeft, ForceMode.Impulse);
-            Debug.DrawRay(transform.position, CalculateAwayVector(leftEdge) * willToNotCrashAndDie * left_approach_speed / prevDistLeft, Color.cyan);
+            //rb.AddForce(CalculateAwayVector(leftEdge) * willToNotCrashAndDie * left_approach_speed / prevDistLeft, ForceMode.Impulse);
+            //Debug.DrawRay(transform.position, CalculateAwayVector(leftEdge) * willToNotCrashAndDie * left_approach_speed / prevDistLeft, Color.cyan);
 
-            //rb.AddForce(CalculateEdgeForce(0.5f, leftEdge.ClosestPoint(transform.position)) * CalculateAwayVector(leftEdge), ForceMode.Impulse);
-            //Debug.DrawRay(transform.position, CalculateEdgeForce(0.5f, leftEdge.ClosestPoint(transform.position)) * CalculateAwayVector(leftEdge), Color.cyan);
+            rb.AddForce(CalculateLeftEdgeForce(willToNotCrashAndDie, willToNotCrashAndDie, leftEdge.ClosestPoint(transform.position)), ForceMode.Impulse);
+            //Debug.DrawRay(transform.position, CalculateEdgeForce(0.5f, transform.position - leftEdge.ClosestPoint(transform.position)), Color.cyan);
             // Debug.Log("Force: " + (willToNotCrashAndDie * left_approach_speed / (prevDistLeft * prevDistLeft * distanceInfluenceScalar)));
         }
 
@@ -115,11 +129,11 @@ public class EdgeAvoidance : MonoBehaviour
         {
             // We're closing in on the right edge
             /** (1/(CalculateDistanceToEdge(leftEdge) * distanceInfluenceScalar))*/
-            rb.AddForce(CalculateAwayVector(rightEdge) * willToNotCrashAndDie * right_approach_speed / prevDistRight, ForceMode.Impulse);
-            Debug.DrawRay(transform.position, CalculateAwayVector(rightEdge) * willToNotCrashAndDie * right_approach_speed / prevDistRight, Color.cyan);
+            //rb.AddForce(CalculateAwayVector(rightEdge) * willToNotCrashAndDie * right_approach_speed / prevDistRight, ForceMode.Impulse);
+            //Debug.DrawRay(transform.position, CalculateAwayVector(rightEdge) * willToNotCrashAndDie * right_approach_speed / prevDistRight, Color.cyan);
 
-            //rb.AddForce(CalculateEdgeForce(0.5f, rightEdge.ClosestPoint(transform.position)) * CalculateAwayVector(rightEdge), ForceMode.Impulse);
-            //Debug.DrawRay(transform.position, CalculateEdgeForce(0.5f, rightEdge.ClosestPoint(transform.position)) * CalculateAwayVector(rightEdge), Color.cyan);
+            rb.AddForce(CalculateRightEdgeForce(willToNotCrashAndDie, willToNotCrashAndDie, rightEdge.ClosestPoint(transform.position)), ForceMode.Impulse);
+            //Debug.DrawRay(transform.position, CalculateEdgeForce(0.5f, transform.position - rightEdge.ClosestPoint(transform.position)), Color.cyan);
             // Debug.Log("Force: " + (willToNotCrashAndDie * right_approach_speed / (prevDistRight * prevDistRight * distanceInfluenceScalar)));
         }
 

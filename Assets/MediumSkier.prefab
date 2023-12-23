@@ -246,7 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b5bd807299f1742934a09a4d2dd4d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  willToNotCrashAndDie: 2
+  willToNotCrashAndDie: 1
   distanceInfluenceScalar: 0.001
   prevDistLeft: 13.506117
   prevDistRight: 10.69734

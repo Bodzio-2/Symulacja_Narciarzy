@@ -116,10 +116,12 @@ public class TurnController : MonoBehaviour
 
     void Turn(Vector3 dir)
     {
-        rb.AddForce(dir * turnForce * RandomGaussian(0.8f,1.2f));
+        rb.AddForce(dir * turnForce * RandomGaussian(0.8f,1.2f), ForceMode.Impulse);
+        Debug.DrawRay(transform.position, dir * turnForce * RandomGaussian(0.8f, 1.2f), Color.red);
         if(turnStartTime>0.1)
         {
             rb.AddForce(-rb.velocity.normalized * ninjaSlowDownScalar);
+            Debug.DrawRay(transform.position, -rb.velocity.normalized * ninjaSlowDownScalar, Color.blue);
         }
         
     }
